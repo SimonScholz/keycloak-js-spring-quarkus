@@ -1,0 +1,9 @@
+{
+    "realm": "vue-keycloak-auth",
+    "auth-server-url": "http://localhost:8180/",
+    "ssl-required": "external",
+    "resource": "vuejs",
+    "public-client": true,
+    "confidential-port": 0
+  }
+  
