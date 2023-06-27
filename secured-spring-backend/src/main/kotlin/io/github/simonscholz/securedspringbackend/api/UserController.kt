@@ -13,5 +13,5 @@ class UserController {
     fun hello(): String = "Hello World!"
 
     @GetMapping("/me")
-    fun me(principal: Principal): String = principal.name
+    fun me(principal: Principal): String = "Hello ${principal.name}"
 }

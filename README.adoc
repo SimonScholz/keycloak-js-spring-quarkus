@@ -1,0 +1,48 @@
+= Security Setup with Keycloak
+:toc:
+:toc-placement: preamble
+:toclevels: 3
+
+This sample is supposed to show the usage of the keycloak-js library for any frontend application using JavaScript, e.g, React or Vue.
+
+We'll also ramp up a keycloak 21.1.1 instance using docker compose.
+
+Besides that this repository consists of a Spring and Quarkus application, which talk to KeyCloak in order to implement security.
+
+== Quick Start
+
+[source, bash]
+----
+# Run Keycloak using docker compose
+
+docker compose up
+
+# Start the frontend application
+cd vue-frontend
+npm run serve
+
+# Run the Spring Boot application
+cd secured-spring-backend
+./gradlew bootRun
+----
+
+You can now login to Keycloak using `admin` as username and also `admin` as password here : http://localhost:8180
+
+The Vue application runs here: http://localhost:8080/
+
+The Spring application runs here: http://localhost:8081 and offers two rest endpoints:
+
+* /api/hello
+* /api/me
+
+Here http://localhost:8080/ you can hit the login button and login using `simon` as username and `simon` as password.
+Once logged it you can visualize the raw JWT token hitting the `Show token (raw)` button.
+
+Now with this valid token you can either hit the backend applications using `fetch`` or `XMLHttpRequest` or using curl like this:
+
+[source, bash]
+----
+curl -v localhost:8081/api/me -H "Accept: application/json" -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVNVE4b1lxNXdMY3NEVXl4MExBcnlxTVFmVjhzQmRUY2RCdTN3MzhobkdrIn0.eyJleHAiOjE2ODc4OTg4MzEsImlhdCI6MTY4Nzg5ODUzMSwiYXV0aF90aW1lIjoxNjg3ODk4MTUyLCJqdGkiOiI3ZjEyZGVjNi1jZmM2LTQ1ODctOTdjNS0xMDAyMGQxMzBmMDQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgxODAvcmVhbG1zL3Z1ZS1rZXljbG9hay1hdXRoIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk2NDViOGUyLThjNTMtNDI0ZS04YzI1LTM5OTgxMjE2NzNhYyIsInR5cCI6IkJlYXJlciIsImF6cCI6InZ1ZWpzIiwibm9uY2UiOiJhYjIyYWUzMC05ODJlLTQ0MTktYTY5My05NjFhZDgyZDQwMjAiLCJzZXNzaW9uX3N0YXRlIjoiMzQzMjUzMDMtYjUwZi00MDMzLThiNmMtNGFiYWRhYWUzMWZjIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLXZ1ZS1rZXljbG9hay1hdXRoIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7InZ1ZWpzIjp7InJvbGVzIjpbIkFETUlOIiwidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsInNpZCI6IjM0MzI1MzAzLWI1MGYtNDAzMy04YjZjLTRhYmFkYWFlMzFmYyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6InRlc3QgYmFyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2ltb24iLCJnaXZlbl9uYW1lIjoidGVzdCIsImZhbWlseV9uYW1lIjoiYmFyIiwiZW1haWwiOiJteWVtYWlsQGZvby5iYXIifQ.ckseTe8JzdRfbsxKku_jdoHFkzcKf_ykb0cWI3lzuk5F-B4AHwL7m-Przz56XK0w2S0K14YBRHydyEVf11kaxTjdE15MKMVx-NYAiSh_sw4PfpUkF1KbvIA8VLHhc5-l2dq6vIoLym2lVqFSDL0IZKZ3W6T5ZzfaMbJ7ZobL9UrqDblyTygAbnbwKjK5nVu1-pEGzZu8D4wpU68Wn9yfkMC0sH3rmf5OrVzAf3X_Fw2FnzfS_FQUPhbBENXzac2ZbdmpDcSWZ8PwsmgZdCv5SRYIYSOoSs4Osf66T-Az283hGOM9FgQ99E2L2Yhido42YbsBE4FYzkABqs0ga0OLgg"
+----
+
+Of course this bearer token has already expired and you need to replace it with a new one.
