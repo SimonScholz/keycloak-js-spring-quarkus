@@ -96,6 +96,7 @@ keycloak.onActionUpdate = function (status: string) {
 };
 // Flow can be changed to 'implicit' or 'hybrid', but then client must enable implicit flow in admin console too
 const initOptions: KeycloakInitOptions = {
+  pkceMethod: "S256",
   responseMode: "fragment",
   flow: "standard",
 };

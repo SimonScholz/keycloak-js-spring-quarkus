@@ -59,3 +59,4 @@ out/
 
 ### VS Code ###
 .vscode/
+./dev-environment/docker-config/postgres/data/
