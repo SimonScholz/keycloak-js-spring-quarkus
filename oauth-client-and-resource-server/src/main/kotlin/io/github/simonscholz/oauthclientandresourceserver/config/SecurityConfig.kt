@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.convert.converter.Converter
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AbstractAuthenticationToken
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -23,6 +24,7 @@ class SecurityConfig {
         }
             .authorizeHttpRequests {
                 it.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole(USER, ADMIN)
+                it.requestMatchers(HttpMethod.GET, "/login").authenticated()
                 it.requestMatchers(HttpMethod.POST, "/graphql").permitAll()
                 it.anyRequest().denyAll()
             }
@@ -31,6 +33,7 @@ class SecurityConfig {
                     it.jwtAuthenticationConverter(jwtAuthenticationConverter())
                 }
             }
+            .oauth2Login(Customizer.withDefaults())
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
